@@ -159,6 +159,22 @@ namespace MeshToolbox
             return d < v1.magnitude;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Vector3 vector &&
+                   x == vector.x &&
+                   y == vector.y &&
+                   z == vector.z;
+        }
+        public override int GetHashCode()
+        {
+            var hashCode = 373119288;
+            hashCode = hashCode * -1521134295 + x.GetHashCode();
+            hashCode = hashCode * -1521134295 + y.GetHashCode();
+            hashCode = hashCode * -1521134295 + z.GetHashCode();
+            return hashCode;
+        }
+
         #region Cast
         public static explicit operator Vector2(Vector3 vec)
         {

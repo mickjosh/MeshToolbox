@@ -14,7 +14,7 @@ namespace MeshToolbox.Tools
         /// <param name="Path">The path of the mesh</param>
         /// <param name="Type">The type of the mesh</param>
         /// <returns>The mesh from the file</returns>
-        public static Mesh Import(string Path, MeshType Type)
+        public static Mesh Import(string Path, MeshFormat Type)
         {
             List<Vector3> vertex = new List<Vector3>();
             List<Vector3> normals = new List<Vector3>();
