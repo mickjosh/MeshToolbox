@@ -23,13 +23,17 @@ namespace MeshToolbox
         #region Constructor
         public Mesh()
         {
+            name = "mesh";
+
             _vertex = new Vector3[0];
             _normals = new Vector3[0];
             _uvs = new Vector2[0];
             _triangles = new int[0];
         }
-        public Mesh(Vector3[] Vertex, Vector3[] Normals, Vector2[] Uvs, int[] Triangles)
+        public Mesh(Vector3[] Vertex, Vector3[] Normals, Vector2[] Uvs, int[] Triangles, string name = "mesh")
         {
+            name = "mesh";
+
             if (Normals.Length != Vertex.Length)
             {
                 //Throw Error
@@ -51,6 +55,8 @@ namespace MeshToolbox
         #endregion
 
         #region Variables
+        public string name;
+
         public Vector3[] vertex
         {
             get
