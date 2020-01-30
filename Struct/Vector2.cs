@@ -8,12 +8,15 @@ namespace MeshToolbox
 {
     public struct Vector2
     {
+        #region Constructor
         public Vector2(double X, double Y)
         {
             x = X;
             y = Y;
         }
+        #endregion
 
+        #region Variables
         public static Vector2 zero = new Vector2(0, 0);
         public static Vector2 one = new Vector2(1, 1);
 
@@ -42,6 +45,7 @@ namespace MeshToolbox
                 return this / magnitude;
             }
         }
+        #endregion
 
         #region Operator
         public static Vector2 operator +(Vector2 v1, Vector2 v2)

@@ -20,6 +20,7 @@ namespace MeshToolbox
     /// </summary>
     public class Mesh
     {
+        #region Constructor
         public Mesh()
         {
             _vertex = new Vector3[0];
@@ -47,7 +48,9 @@ namespace MeshToolbox
             _uvs = Uvs;
             _triangles = Triangles;
         }
+        #endregion
 
+        #region Variables
         public Vector3[] vertex
         {
             get
@@ -92,6 +95,7 @@ namespace MeshToolbox
             }
         }
         private Vector3 _scale = Vector3.zero;
+        #endregion
 
         /// <summary>
         /// Check if the current mesh contain normals
@@ -118,10 +122,18 @@ namespace MeshToolbox
             //Do the cleaning proccess
         }
 
+        /// <summary>
+        /// Scale the mesh relative from its original size
+        /// </summary>
+        /// <param name="scale">The new size of the mesh</param>
         public void ScaleMesh(double scale)
         {
             ScaleMesh((Vector3)scale);
         }
+        /// <summary>
+        /// Scale the mesh relative from its original size
+        /// </summary>
+        /// <param name="scale">The new size of the mesh</param>
         public void ScaleMesh(Vector3 scale)
         {
             int vertexCount = vertex.Length;

@@ -8,13 +8,16 @@ namespace MeshToolbox
 {
     public struct Vector3
     {
+        #region Constructor
         public Vector3(double X, double Y, double Z)
         {
             x = X;
             y = Y;
             z = Z;
         }
+        #endregion
 
+        #region Variables
         public static Vector3 zero = new Vector3(0, 0, 0);
         public static Vector3 one = new Vector3(1, 1, 1);
 
@@ -44,6 +47,7 @@ namespace MeshToolbox
                 return this / magnitude;
             }
         }
+        #endregion
 
         #region Operator
         public static Vector3 operator +(Vector3 v1, Vector3 v2)
