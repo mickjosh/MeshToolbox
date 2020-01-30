@@ -40,13 +40,15 @@ namespace MeshToolbox
             }
 
             _vertex = Vertex;
+            _normals = new Vector3[0];
+            _uvs = new Vector2[0];
             _triangles = Triangles;
         }
         public Mesh(Vector3[] Vertex, Vector3[] Normals, int[] Triangles, string Name = "mesh")
         {
             name = Name;
 
-            if (Vertex.Length != Normals.Length)
+            if ((Vertex.Length != Normals.Length) && Normals.Length != 0)
             {
                 //Throw Error
             }
@@ -57,13 +59,14 @@ namespace MeshToolbox
 
             _vertex = Vertex;
             _normals = Normals;
+            _uvs = new Vector2[0];
             _triangles = Triangles;
         }
         public Mesh(Vector3[] Vertex, Vector2[] Uvs, int[] Triangles, string Name = "mesh")
         {
             name = Name;
 
-            if (Vertex.Length != Uvs.Length)
+            if ((Vertex.Length != Uvs.Length) && Uvs.Length != 0)
             {
                 //Throw Error
             }
@@ -73,6 +76,7 @@ namespace MeshToolbox
             }
 
             _vertex = Vertex;
+            _normals = new Vector3[0];
             _uvs = Uvs;
             _triangles = Triangles;
         }
@@ -80,11 +84,11 @@ namespace MeshToolbox
         {
             name = Name;
 
-            if (Normals.Length != Vertex.Length)
+            if ((Normals.Length != Vertex.Length) && Normals.Length != 0)
             {
                 //Throw Error
             }
-            else if (Uvs.Length != Vertex.Length)
+            else if ((Uvs.Length != Vertex.Length) && Uvs.Length != 0)
             {
                 //Throw Error
             }
@@ -197,6 +201,15 @@ namespace MeshToolbox
             }
 
             _scale = scale;
+        }
+
+        /// <summary>
+        /// Clone the current mesh into a new one
+        /// </summary>
+        /// <returns>The cloned Mesh</returns>
+        public Mesh Clone()
+        {
+            return new Mesh((Vector3[])_vertex.Clone(), (Vector3[])_normals.Clone(), (Vector2[])_uvs.Clone(), (int[])_triangles.Clone(), name);
         }
     }
 }
