@@ -14,18 +14,18 @@ namespace MeshToolbox.Tools
         /// <param name="Mesh">The mesh to export</param>
         /// <param name="Path">The path where to export the mesh to</param>
         /// <param name="Type">The type of mesh to export to</param>
-        public static void Export(Mesh Mesh, string Path, MeshType Type)
+        public static void Export(Mesh Mesh, string Path, MeshFormat Type)
         {
             string text = "";
 
             switch(Type)
             {
-                case MeshType.Obj:
-                    ExportOBJ();
+                case MeshFormat.Obj:
+                    ExportOBJ(Mesh);
                     break;
 
-                case MeshType.Stl:
-                    ExportSTL();
+                case MeshFormat.Stl:
+                    ExportSTL(Mesh);
                     break;
             }
 
@@ -42,7 +42,7 @@ namespace MeshToolbox.Tools
         /// <param name="Mesh">The mesh to export</param>
         /// <param name="Path">The path where to export the mesh to</param>
         /// <param name="Type">The type of mesh to export to</param>
-        public static void ExportMesh(this Mesh Mesh, string Path, MeshType Type)
+        public static void ExportMesh(this Mesh Mesh, string Path, MeshFormat Type)
         {
             Export(Mesh, Path, Type);
         }

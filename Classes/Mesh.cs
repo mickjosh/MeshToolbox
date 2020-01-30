@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace MeshToolbox
 {
-    public enum MeshType
+    /// <summary>
+    /// The enum that contain all suported mesh format
+    /// </summary>
+    public enum MeshFormat
     {
         Obj,
         Stl
     }
 
+    /// <summary>
+    /// The class that contain all the data of a mesh
+    /// </summary>
     public class Mesh
     {
         public Mesh()
@@ -79,11 +85,28 @@ namespace MeshToolbox
         private int[] _triangles;
 
         /// <summary>
+        /// Check if the current mesh contain normals
+        /// </summary>
+        /// <returns>If the mesh contain normals</returns>
+        public bool ContainNormals()
+        {
+            return normals.Length == vertex.Length;
+        }
+        /// <summary>
+        /// Check if the current mesh contain uvs
+        /// </summary>
+        /// <returns>If the current mesh contain uvs</returns>
+        public bool ContainUvs()
+        {
+            return uvs.Length == vertex.Length;
+        }
+
+        /// <summary>
         /// Remove unused vertex, normal and uv
         /// </summary>
-        public void Clear()
+        public void Clean()
         {
-            
+            //Do the cleaning proccess
         }
     }
 }
