@@ -158,6 +158,17 @@ namespace MeshToolbox
         {
             return d < v1.magnitude;
         }
+
+        #region Cast
+        public static explicit operator Vector2(Vector3 vec)
+        {
+            return new Vector2(vec.x, vec.y);
+        }
+        public static explicit operator double(Vector3 vec)
+        {
+            return vec.magnitude;
+        }
+        #endregion
         #endregion
     }
 }
