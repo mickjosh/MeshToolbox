@@ -84,6 +84,15 @@ namespace MeshToolbox
         }
         private int[] _triangles;
 
+        public Vector3 Scale
+        {
+            get
+            {
+                return _scale;
+            }
+        }
+        private Vector3 _scale = Vector3.zero;
+
         /// <summary>
         /// Check if the current mesh contain normals
         /// </summary>
@@ -107,6 +116,23 @@ namespace MeshToolbox
         public void Clean()
         {
             //Do the cleaning proccess
+        }
+
+        public void ScaleMesh(double scale)
+        {
+            ScaleMesh((Vector3)scale);
+        }
+        public void ScaleMesh(Vector3 scale)
+        {
+            int vertexCount = vertex.Length;
+
+            Vector3 mul = new Vector3((1.0 / _scale.x) * scale.x, (1.0 / _scale.y) * scale.y, (1.0 / _scale.z) * scale.z);
+            for (int i = 0; i < vertexCount; i++)
+            {
+                _vertex[i] *= mul;
+            }
+
+            _scale = scale;
         }
     }
 }

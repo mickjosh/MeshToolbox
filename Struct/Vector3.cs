@@ -184,6 +184,10 @@ namespace MeshToolbox
         {
             return vec.magnitude;
         }
+        public static explicit operator Vector3(double d)
+        {
+            return new Vector3(d, d, d);
+        }
         #endregion
         #endregion
     }

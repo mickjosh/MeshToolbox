@@ -180,6 +180,10 @@ namespace MeshToolbox
         {
             return vec.magnitude;
         }
+        public static explicit operator Vector2(double d)
+        {
+            return new Vector2(d, d);
+        }
         #endregion
         #endregion
     }
