@@ -30,9 +30,55 @@ namespace MeshToolbox
             _uvs = new Vector2[0];
             _triangles = new int[0];
         }
-        public Mesh(Vector3[] Vertex, Vector3[] Normals, Vector2[] Uvs, int[] Triangles, string name = "mesh")
+        public Mesh(Vector3[] Vertex, int[] Triangles, string Name = "mesh")
         {
-            name = "mesh";
+            name = Name;
+
+            if (Triangles.Length % 3 != 0)
+            {
+                //Throw Error
+            }
+
+            _vertex = Vertex;
+            _triangles = Triangles;
+        }
+        public Mesh(Vector3[] Vertex, Vector3[] Normals, int[] Triangles, string Name = "mesh")
+        {
+            name = Name;
+
+            if (Vertex.Length != Normals.Length)
+            {
+                //Throw Error
+            }
+            else if (Triangles.Length % 3 != 0)
+            {
+                //Throw Error
+            }
+
+            _vertex = Vertex;
+            _normals = Normals;
+            _triangles = Triangles;
+        }
+        public Mesh(Vector3[] Vertex, Vector2[] Uvs, int[] Triangles, string Name = "mesh")
+        {
+            name = Name;
+
+            if (Vertex.Length != Uvs.Length)
+            {
+                //Throw Error
+            }
+            else if (Triangles.Length % 3 != 0)
+            {
+                //Throw Error
+            }
+
+            _vertex = Vertex;
+            _uvs = Uvs;
+            _triangles = Triangles;
+        }
+        public Mesh(Vector3[] Vertex, Vector3[] Normals, Vector2[] Uvs, int[] Triangles, string Name = "mesh")
+        {
+            name = Name;
 
             if (Normals.Length != Vertex.Length)
             {
