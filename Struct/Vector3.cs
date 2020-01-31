@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MeshToolbox
 {
@@ -20,6 +16,10 @@ namespace MeshToolbox
         #region Variables
         public static Vector3 zero = new Vector3(0, 0, 0);
         public static Vector3 one = new Vector3(1, 1, 1);
+
+        public static Vector3 unitX = new Vector3(1, 0, 0);
+        public static Vector3 unitY = new Vector3(0, 1, 0);
+        public static Vector3 unitZ = new Vector3(0, 0, 1);
 
         public double x;
         public double y;

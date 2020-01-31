@@ -155,7 +155,40 @@ namespace MeshToolbox.Tools
         /// <returns>The mesh in stl format</returns>
         private static string ExportSTL(Mesh Mesh)
         {
-            return "";
+            //STL Required Normals
+            if(!Mesh.ContainNormals())
+            {
+                //Throw Error
+            }
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.AppendLine($"solid {Mesh.name.Replace(" ", "_")}");
+
+            for(int i = 0; i < Mesh.triangles.Length; i += 3)
+            {
+                int t1 = Mesh.triangles[i];
+                int t2 = Mesh.triangles[i + 1];
+                int t3 = Mesh.triangles[i + 2];
+
+                Vector3 normal = (Mesh.normals[t1] + Mesh.normals[t2] + Mesh.normals[t3]) / 3.0;
+
+                Vector3 v1 = Mesh.vertex[t1];
+                Vector3 v2 = Mesh.vertex[t2];
+                Vector3 v3 = Mesh.vertex[t3];
+
+                builder.AppendLine($"   facet normal {normal.x.ToString(CultureInfo.InvariantCulture)} {normal.y.ToString(CultureInfo.InvariantCulture)} {normal.z.ToString(CultureInfo.InvariantCulture)}");
+                builder.AppendLine("        outer loop");
+                builder.AppendLine($"           vertex {v1.x.ToString(CultureInfo.InvariantCulture)} {v1.y.ToString(CultureInfo.InvariantCulture)} {v1.z.ToString(CultureInfo.InvariantCulture)}");
+                builder.AppendLine($"           vertex {v2.x.ToString(CultureInfo.InvariantCulture)} {v2.y.ToString(CultureInfo.InvariantCulture)} {v2.z.ToString(CultureInfo.InvariantCulture)}");
+                builder.AppendLine($"           vertex {v3.x.ToString(CultureInfo.InvariantCulture)} {v3.y.ToString(CultureInfo.InvariantCulture)} {v3.z.ToString(CultureInfo.InvariantCulture)}");
+                builder.AppendLine("        endloop");
+                builder.AppendLine("    endfacet");
+            }
+
+            builder.AppendLine("endsolid");
+
+            return builder.ToString();
         }
     }
 }

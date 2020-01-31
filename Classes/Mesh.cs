@@ -143,7 +143,7 @@ namespace MeshToolbox
         }
         private int[] _triangles;
 
-        public Vector3 Scale
+        public Vector3 scale
         {
             get
             {
