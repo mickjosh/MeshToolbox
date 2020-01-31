@@ -102,23 +102,23 @@ namespace MeshToolbox.Tools
 
                 builder.AppendLine("");
             }
-            int triangleCount = Mesh.uvs.Length;
+            int triangleCount = Mesh.triangles.Length;
 
             //Save the triangles in the correct format based on the optional component
             if (!isUvs && !isNormals)
             {            
                 for(int i = 0; i < triangleCount; i += 3)
                 {
-                    builder.AppendLine($"f {Mesh.triangles[i]} {Mesh.triangles[i + 1]} {Mesh.triangles[i + 2]}");
+                    builder.AppendLine($"f {Mesh.triangles[i] + 1} {Mesh.triangles[i + 1] + 1} {Mesh.triangles[i + 2] + 1}");
                 }
             }
             else if (isNormals && !isUvs)
             {
                 for (int i = 0; i < triangleCount; i += 3)
                 {
-                    int t1 = Mesh.triangles[i];
-                    int t2 = Mesh.triangles[i + 1];
-                    int t3 = Mesh.triangles[i + 2];
+                    int t1 = Mesh.triangles[i] + 1;
+                    int t2 = Mesh.triangles[i + 1] + 1;
+                    int t3 = Mesh.triangles[i + 2] + 1;
 
                     builder.AppendLine($"f {t1}/{t1} {t2}/{t2} {t3}/{t3}");
                 }
@@ -127,9 +127,9 @@ namespace MeshToolbox.Tools
             {
                 for (int i = 0; i < triangleCount; i += 3)
                 {
-                    int t1 = Mesh.triangles[i];
-                    int t2 = Mesh.triangles[i + 1];
-                    int t3 = Mesh.triangles[i + 2];
+                    int t1 = Mesh.triangles[i] + 1;
+                    int t2 = Mesh.triangles[i + 1] + 1;
+                    int t3 = Mesh.triangles[i + 2] + 1;
 
                     builder.AppendLine($"f {t1}//{t1} {t2}//{t2} {t3}//{t3}");
                 }
@@ -138,9 +138,9 @@ namespace MeshToolbox.Tools
             {
                 for (int i = 0; i < triangleCount; i += 3)
                 {
-                    int t1 = Mesh.triangles[i];
-                    int t2 = Mesh.triangles[i + 1];
-                    int t3 = Mesh.triangles[i + 2];
+                    int t1 = Mesh.triangles[i] + 1;
+                    int t2 = Mesh.triangles[i + 1] + 1;
+                    int t3 = Mesh.triangles[i + 2] + 1;
 
                     builder.AppendLine($"f {t1}/{t1}/{t1} {t2}/{t2}/{t2} {t3}/{t3}/{t3}");
                 }
