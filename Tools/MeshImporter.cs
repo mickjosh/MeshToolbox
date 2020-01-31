@@ -15,12 +15,41 @@ namespace MeshToolbox.Tools
         /// <returns>The mesh from the file</returns>
         public static Mesh Import(string Path, MeshFormat Type)
         {
-            List<Vector3> vertex = new List<Vector3>();
-            List<Vector3> normals = new List<Vector3>();
-            List<Vector2> uvs = new List<Vector2>();
-            List<int> triangles = new List<int>();
+            //Import with the right algorhitm for the type of the file
+            switch(Type)
+            {
+                case MeshFormat.Obj:
+                    return ImportOBJ(Path);
 
-            return new Mesh(vertex.ToArray(), normals.ToArray(), uvs.ToArray(), triangles.ToArray());
+                case MeshFormat.Stl:
+                    return ImportSTL(Path);
+
+                default:
+                    //Throw Error
+                    return new Mesh();
+            }
+        }
+        /// <summary>
+        /// Import a mesh from a file and auto detect the type
+        /// </summary>
+        /// <param name="Path">The path of the mesh</param>
+        /// <returns>The mesh from the file</returns>
+        public static Mesh Import(string Path)
+        {
+            string extension = System.IO.Path.GetExtension(Path);
+
+            switch(extension)
+            {
+                case ".obj":
+                    return ImportOBJ(Path);
+
+                case ".stl":
+                    return ImportSTL(Path);
+
+                default:
+                    //Throw Error
+                    return new Mesh();
+            }
         }
 
         /// <summary>
@@ -47,6 +76,7 @@ namespace MeshToolbox.Tools
 
                 string[] split = line.Split(' ');
 
+                //Check what type of data there is on the current line
                 if ((split[0] == "o" || split[0] == "g") && name == "")
                 {
                     name = split[1];
@@ -91,6 +121,7 @@ namespace MeshToolbox.Tools
                 }
             }
 
+            //Add the default name if there was none into the file
             if (name == "")
                 name = "mesh";
 

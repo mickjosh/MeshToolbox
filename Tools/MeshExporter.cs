@@ -72,6 +72,7 @@ namespace MeshToolbox.Tools
             builder.AppendLine($"o {Mesh.name}");
             builder.AppendLine("");
 
+            //Write the vertex data ex: "v 0.5 1.5 -0.3"
             foreach(var v in Mesh.vertex)
             {
                 builder.AppendLine($"v {v.x.ToString(CultureInfo.InvariantCulture)} {v.y.ToString(CultureInfo.InvariantCulture)} {v.z.ToString(CultureInfo.InvariantCulture)}");
@@ -79,7 +80,8 @@ namespace MeshToolbox.Tools
 
             builder.AppendLine("");
 
-            if(Mesh.ContainNormals())
+            //Write the normal data(if contain any) ex: "vn 0.5 1.5 -0.3"
+            if (Mesh.ContainNormals())
             {
                 isNormals = true;
 
@@ -91,7 +93,8 @@ namespace MeshToolbox.Tools
                 builder.AppendLine("");
             }
 
-            if(Mesh.ContainUvs())
+            //Write the uv's data(if contain any) ex: "vt 0.5 1.5"
+            if (Mesh.ContainUvs())
             {
                 isUvs = true;
 
@@ -171,12 +174,14 @@ namespace MeshToolbox.Tools
                 int t2 = Mesh.triangles[i + 1];
                 int t3 = Mesh.triangles[i + 2];
 
+                //Transform the normals from a vertex based to a facet based
                 Vector3 normal = (Mesh.normals[t1] + Mesh.normals[t2] + Mesh.normals[t3]) / 3.0;
 
                 Vector3 v1 = Mesh.vertex[t1];
                 Vector3 v2 = Mesh.vertex[t2];
                 Vector3 v3 = Mesh.vertex[t3];
 
+                //Write all the data from a facet
                 builder.AppendLine($"   facet normal {normal.x.ToString(CultureInfo.InvariantCulture)} {normal.y.ToString(CultureInfo.InvariantCulture)} {normal.z.ToString(CultureInfo.InvariantCulture)}");
                 builder.AppendLine("        outer loop");
                 builder.AppendLine($"           vertex {v1.x.ToString(CultureInfo.InvariantCulture)} {v1.y.ToString(CultureInfo.InvariantCulture)} {v1.z.ToString(CultureInfo.InvariantCulture)}");
