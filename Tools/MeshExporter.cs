@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MeshToolbox.Tools
 {
+    /// <summary>
+    /// The mesh exporter tool
+    /// </summary>
     public static class MeshExporter
     {
         /// <summary>
@@ -22,11 +22,11 @@ namespace MeshToolbox.Tools
             switch(Type)
             {
                 case MeshFormat.Obj:
-                    ExportOBJ(Mesh);
+                    text = ExportOBJ(Mesh);
                     break;
 
                 case MeshFormat.Stl:
-                    ExportSTL(Mesh);
+                    text = ExportSTL(Mesh);
                     break;
             }
 
