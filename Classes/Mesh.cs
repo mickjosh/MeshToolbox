@@ -1,4 +1,6 @@
-﻿namespace MeshToolbox
+﻿using System;
+
+namespace MeshToolbox
 {
     /// <summary>
     /// The enum that contain all suported mesh format
@@ -196,6 +198,56 @@
             }
 
             _scale = scale;
+        }
+
+        /// <summary>
+        /// Translate the mesh
+        /// </summary>
+        /// <param name="translation">How much to translate the mesh</param>
+        public void TranslateMesh(Vector3 translation)
+        {
+            for(int i = 0; i < _vertex.Length; i++)
+            {
+                _vertex[i] += translation;
+            }
+        }
+        /// <summary>
+        /// Rotate the mesh
+        /// </summary>
+        /// <param name="rotation">How much to rotate the mesh in radian</param>
+        public void Rotate(Vector3 rotation)
+        {
+            var cosa = Math.Cos(rotation.y);
+            var sina = Math.Sin(rotation.y);
+
+            var cosb = Math.Cos(rotation.x);
+            var sinb = Math.Sin(rotation.x);
+
+            var cosc = Math.Cos(rotation.z);
+            var sinc = Math.Sin(rotation.z);
+
+            var Axx = cosa * cosb;
+            var Axy = cosa * sinb * sinc - sina * cosc;
+            var Axz = cosa * sinb * cosc + sina * sinc;
+
+            var Ayx = sina * cosb;
+            var Ayy = sina * sinb * sinc + cosa * cosc;
+            var Ayz = sina * sinb * cosc - cosa * sinc;
+
+            var Azx = -sinb;
+            var Azy = cosb * sinc;
+            var Azz = cosb * cosc;
+
+            for (var i = 0; i < _vertex.Length; i++)
+            {
+                var px = _vertex[i].x;
+                var py = _vertex[i].y;
+                var pz = _vertex[i].z;
+
+                _vertex[i].x = Axx * px + Axy * py + Axz * pz;
+                _vertex[i].y = Ayx * px + Ayy * py + Ayz * pz;
+                _vertex[i].z = Azx * px + Azy * py + Azz * pz;
+            }
         }
 
         /// <summary>
