@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
@@ -17,25 +18,20 @@ namespace MeshToolbox.Tools
         /// <param name="Type">The type of mesh to export to</param>
         public static void Export(Mesh Mesh, string Path, MeshFormat Type)
         {
-            string text = "";
-
             switch(Type)
             {
                 case MeshFormat.Obj:
-                    text = ExportOBJ(Mesh);
+                    ExportOBJ(Mesh, Path);
                     break;
 
                 case MeshFormat.Stl:
-                    text = ExportSTL(Mesh);
+                    ExportSTL(Mesh, Path);
+                    break;
+
+                case MeshFormat.StlB:
+                    ExportSTLB(Mesh, Path);
                     break;
             }
-
-            if(String.IsNullOrEmpty(text))
-            {
-                //Throw Error
-            }
-
-            System.IO.File.WriteAllText(Path, text);
         }
         /// <summary>
         /// Export the mesh to a file
@@ -53,7 +49,7 @@ namespace MeshToolbox.Tools
         /// </summary>
         /// <param name="Mesh">The mesh to export</param>
         /// <returns>The mesh in obj format</returns>
-        private static string ExportOBJ(Mesh Mesh)
+        private static void ExportOBJ(Mesh Mesh, string Path)
         {
             bool isNormals = false;
             bool isUvs = false;
@@ -149,14 +145,14 @@ namespace MeshToolbox.Tools
                 }
             }
 
-            return builder.ToString();
+            System.IO.File.WriteAllText(Path, builder.ToString());
         }
         /// <summary>
         /// Generate a string that contain the mesh in the stl format
         /// </summary>
         /// <param name="Mesh">The mesh to export</param>
         /// <returns>The mesh in stl format</returns>
-        private static string ExportSTL(Mesh Mesh)
+        private static void ExportSTL(Mesh Mesh, string Path)
         {
             //STL Required Normals
             if(!Mesh.ContainNormals())
@@ -175,7 +171,7 @@ namespace MeshToolbox.Tools
                 int t3 = Mesh.triangles[i + 2];
 
                 //Transform the normals from a vertex based to a facet based
-                Vector3 normal = (Mesh.normals[t1] + Mesh.normals[t2] + Mesh.normals[t3]) / 3.0;
+                Vector3 normal = ((Mesh.normals[t1] + Mesh.normals[t2] + Mesh.normals[t3]) / 3.0).normalized;
 
                 Vector3 v1 = Mesh.vertex[t1];
                 Vector3 v2 = Mesh.vertex[t2];
@@ -193,7 +189,57 @@ namespace MeshToolbox.Tools
 
             builder.AppendLine("endsolid");
 
-            return builder.ToString();
+            System.IO.File.WriteAllText(Path, builder.ToString());
+        }
+        /// <summary>
+        /// Generate a string that contain the mesh in the binary stl format
+        /// </summary>
+        /// <param name="Mesh">The mesh to export</param>
+        /// <returns>The mesh in stl binary format</returns>
+        private static void ExportSTLB(Mesh Mesh, string Path)
+        {
+            //STL Required Normals
+            if (!Mesh.ContainNormals())
+            {
+                //Throw Error
+            }
+
+            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(System.IO.File.OpenWrite(Path)))
+            {
+                writer.Write(new byte[80]); //Header
+                writer.Write((uint)(Mesh.triangles.Length / 3));
+
+                for (int i = 0; i < Mesh.triangles.Length; i += 3)
+                {
+                    int t1 = Mesh.triangles[i];
+                    int t2 = Mesh.triangles[i + 1];
+                    int t3 = Mesh.triangles[i + 2];
+
+                    Vector3 n = ((Mesh.normals[t1] + Mesh.normals[t2] + Mesh.normals[t3]) / 3.0).normalized;
+
+                    Vector3 v1 = Mesh.vertex[t1];
+                    Vector3 v2 = Mesh.vertex[t2];
+                    Vector3 v3 = Mesh.vertex[t3];
+
+                    writer.Write((float)n.x);
+                    writer.Write((float)n.y);
+                    writer.Write((float)n.z);
+
+                    writer.Write((float)v1.x);
+                    writer.Write((float)v1.y);
+                    writer.Write((float)v1.z);
+
+                    writer.Write((float)v2.x);
+                    writer.Write((float)v2.y);
+                    writer.Write((float)v2.z);
+  
+                    writer.Write((float)v3.x);
+                    writer.Write((float)v3.y);
+                    writer.Write((float)v3.z);
+
+                    writer.Write((ushort)0);
+                }
+            }
         }
     }
 }

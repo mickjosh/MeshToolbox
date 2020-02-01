@@ -6,7 +6,8 @@
     public enum MeshFormat
     {
         Obj,
-        Stl
+        Stl,
+        StlB
     }
 
     /// <summary>
