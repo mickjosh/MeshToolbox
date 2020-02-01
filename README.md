@@ -31,7 +31,7 @@ This tool let you export OBJ, STL and Binary STL
 This tool let you fusionate 2 mesh together
 
 ```csharp
-  MeshFusion.Fusion(Mesh1, Mesh2);
+  Mesh mesh = MeshFusion.Fusion(Mesh1, Mesh2);
 ```
 
 ## Marching Cube
