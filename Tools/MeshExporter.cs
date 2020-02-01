@@ -34,6 +34,30 @@ namespace MeshToolbox.Tools
             }
         }
         /// <summary>
+        /// Export the mesh to a file and auto detect the type
+        /// </summary>
+        /// <param name="Mesh">The mesh to export</param>
+        /// <param name="Path">The path where to export the mesh to</param>
+        public static void Export(Mesh Mesh, string Path)
+        {
+            string extension = System.IO.Path.GetExtension(Path);
+
+            switch (extension)
+            {
+                case ".obj":
+                    ExportOBJ(Mesh, Path);
+                    break;
+
+                case ".stl":
+                    ExportSTLB(Mesh, Path);
+                    break;
+
+                default:
+                    //Throw Error
+                    break;
+            }
+        }
+        /// <summary>
         /// Export the mesh to a file
         /// </summary>
         /// <param name="Mesh">The mesh to export</param>
@@ -42,6 +66,30 @@ namespace MeshToolbox.Tools
         public static void ExportMesh(this Mesh Mesh, string Path, MeshFormat Type)
         {
             Export(Mesh, Path, Type);
+        }
+        /// <summary>
+        /// Export the mesh to a file and auto detect the type
+        /// </summary>
+        /// <param name="Mesh">The mesh to export</param>
+        /// <param name="Path">The path where to export the mesh to</param>
+        public static void ExportMesh(this Mesh Mesh, string Path)
+        {
+            string extension = System.IO.Path.GetExtension(Path);
+
+            switch (extension)
+            {
+                case ".obj":
+                    ExportOBJ(Mesh, Path);
+                    break;
+
+                case ".stl":
+                    ExportSTLB(Mesh, Path);
+                    break;
+
+                default:
+                    //Throw Error
+                    break;
+            }
         }
 
         /// <summary>
