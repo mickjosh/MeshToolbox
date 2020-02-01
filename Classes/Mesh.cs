@@ -258,5 +258,10 @@ namespace MeshToolbox
         {
             return new Mesh((Vector3[])_vertex.Clone(), (Vector3[])_normals.Clone(), (Vector2[])_uvs.Clone(), (int[])_triangles.Clone(), name);
         }
+
+        public override string ToString()
+        {
+            return $"Vertex: {_vertex.Length} Triangles: {_triangles.Length / 3}";
+        }
     }
 }

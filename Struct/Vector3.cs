@@ -194,5 +194,10 @@ namespace MeshToolbox
         }
         #endregion
         #endregion
+
+        public override string ToString()
+        {
+            return $"({x.ToString(".0")}, {y.ToString(".0")}, {z.ToString(".0")})";
+        }
     }
 }
