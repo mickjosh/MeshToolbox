@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 
 namespace MeshToolbox.Tools
 {
+    /// <summary>
+    /// The primitive mesh tool
+    /// </summary>
     public static class Primitive
     {
-        private static Mesh CreateCube(Vector3 Size, Vector3 Center)
+        /// <summary>
+        /// Generate the mesh of a cube
+        /// </summary>
+        /// <param name="Size">The size of each side</param>
+        /// <returns>Yhem mesh of the cube</returns>
+        public static Mesh CreateCube(Vector3 Size)
         {
             Vector3[] vertices = new Vector3[] {
                 new Vector3(0, 0, 0) , 
