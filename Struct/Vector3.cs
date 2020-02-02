@@ -195,6 +195,49 @@ namespace MeshToolbox
         #endregion
         #endregion
 
+        /// <summary>
+        /// Return a cross product of 2 vector
+        /// </summary>
+        /// <param name="v">The other vector to do the cross product</param>
+        /// <returns>The cross product</returns>
+        public Vector3 Cross(Vector3 v)
+        {
+            double crossX = y * v.z - z * v.y;
+            double crossY = z * v.x - x * v.z;
+            double crossZ = x * v.y - y * v.x;
+
+            return new Vector3(crossX, crossY, crossZ);
+        }
+        /// <summary>
+        /// Return a cross product of 2 vector
+        /// </summary>
+        /// <param name="v1">The first vector to do the cross product</param>
+        /// <param name="v2">The second vector to do the cross product</param>
+        /// <returns>The cross product</returns>
+        public static Vector3 Cross(Vector3 v1, Vector3 v2)
+        {
+            return v1.Cross(v2);
+        }
+        /// <summary>
+        /// Return a dot product of 2 vector
+        /// </summary>
+        /// <param name="v">The other vector to do the dot product</param>
+        /// <returns>The dot product</returns>
+        public double Dot(Vector3 v)
+        {
+            return (x * v.x) + (y * v.y) + (z * v.z);
+        }
+        /// <summary>
+        /// Return a dot product of 2 vector
+        /// </summary>
+        /// <param name="v1">The first vector to do the dot product</param>
+        /// <param name="v2">The second vector to do the dot product</param>
+        /// <returns>The dot product</returns>
+        public static double Dot(Vector3 v1, Vector3 v2)
+        {
+            return v1.Dot(v2);
+        }
+
         public override string ToString()
         {
             return $"({x.ToString(".0")}, {y.ToString(".0")}, {z.ToString(".0")})";

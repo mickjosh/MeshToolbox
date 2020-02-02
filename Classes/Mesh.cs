@@ -139,15 +139,6 @@ namespace MeshToolbox
             }
         }
         private int[] _triangles;
-
-        public Vector3 scale
-        {
-            get
-            {
-                return _scale;
-            }
-        }
-        private Vector3 _scale = Vector3.zero;
         #endregion
 
         /// <summary>
@@ -165,6 +156,15 @@ namespace MeshToolbox
         public bool ContainUvs()
         {
             return uvs.Length == vertex.Length;
+        }
+
+        /// <summary>
+        /// Generate smooth normal for the mesh
+        /// </summary>
+        /// <param name="angle">The angle threshold to smooth the normals</param>
+        public void GenerateNormal(double angle)
+        {
+
         }
 
         /// <summary>
@@ -191,13 +191,10 @@ namespace MeshToolbox
         {
             int vertexCount = vertex.Length;
 
-            Vector3 mul = new Vector3((1.0 / _scale.x) * scale.x, (1.0 / _scale.y) * scale.y, (1.0 / _scale.z) * scale.z);
             for (int i = 0; i < vertexCount; i++)
             {
-                _vertex[i] *= mul;
+                _vertex[i] *= scale;
             }
-
-            _scale = scale;
         }
 
         /// <summary>
