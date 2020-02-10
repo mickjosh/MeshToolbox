@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MeshToolbox.Tools
 {
@@ -22,6 +24,7 @@ namespace MeshToolbox.Tools
                     return ImportOBJ(Path);
 
                 case MeshFormat.Stl:
+                case MeshFormat.StlB:
                     return ImportSTL(Path);
 
                 default:
@@ -134,11 +137,77 @@ namespace MeshToolbox.Tools
         /// <returns>The mesh</returns>
         private static Mesh ImportSTL(string Path)
         {
+            byte[] binaryFile = System.IO.File.ReadAllBytes(Path);
+
+            if(System.Text.Encoding.UTF8.GetString(binaryFile).Contains("solid"))
+            {
+                //Binary STL
+
+                return ImportSTLB(binaryFile);
+            }
+            else
+            {
+                //ASCII STL
+
+                List<Vector3> vertex = new List<Vector3>();
+                List<Vector3> normals = new List<Vector3>();
+                List<int> triangles = new List<int>();
+
+                return new Mesh(vertex.ToArray(), normals.ToArray(), triangles.ToArray());
+            }
+        }
+        /// <summary>
+        /// Generate a mesh from a file of the binary stl format
+        /// </summary>
+        /// <param name="Path">The path of the stl</param>
+        /// <returns>The mesh</returns>
+        private static Mesh ImportSTLB(byte[] binaryFile)
+        {
+            /*
+                UINT8[80] – en-tête
+                UINT32 – Nombre de triangles
+
+                foreach triangle
+                    REAL32[3] – Vecteur normal
+                    REAL32[3] – Sommet 1
+                    REAL32[3] – Sommet 2
+                    REAL32[3] – Sommet 3
+                    UINT16 – Mot de contrôle
+                end         
+             */
+
             List<Vector3> vertex = new List<Vector3>();
             List<Vector3> normals = new List<Vector3>();
             List<int> triangles = new List<int>();
 
-            return new Mesh(vertex.ToArray(), normals.ToArray(),  triangles.ToArray());
+            uint triangleCount = BitConverter.ToUInt32(binaryFile, 80);
+
+            //Byte Count = triangleCount * (12(Normal) + 36(3 Vertex) + 1(emptyByte))
+            for(int i = 0; i < triangleCount; i++)
+            {
+                float nX = BitConverter.ToSingle(binaryFile, 84 + (i * 50));
+                float nY = BitConverter.ToSingle(binaryFile, 88 + (i * 50));
+                float nZ = BitConverter.ToSingle(binaryFile, 92 + (i * 50));
+
+                normals.Add(new Vector3(nX, nY, nZ)); //12 Bytes
+
+                for(int o = 0; o < 3; o++)
+                {
+                    float vX = BitConverter.ToSingle(binaryFile, 96 + (i * 50) + (o * 12));
+                    float vY = BitConverter.ToSingle(binaryFile, 100 + (i * 50) + (o * 12));
+                    float vZ = BitConverter.ToSingle(binaryFile, 104 + (i * 50) + (o * 12));
+
+                    vertex.Add(new Vector3(vX, vY, vZ)); //12 Bytes
+                } //3 * 12 Bytes (36 Bytes)
+
+                triangles.Add(0 + (i * 3));
+                triangles.Add(1 + (i * 3));
+                triangles.Add(2 + (i * 3));
+            }
+
+            //Convert the mesh normal format (STL = triangleNormals, Internal = vertexNormals)
+
+            return new Mesh(vertex.ToArray(), normals.ToArray(), triangles.ToArray());
         }
     }
 }

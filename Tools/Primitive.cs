@@ -160,7 +160,7 @@ namespace MeshToolbox.Tools
         /// <param name="Height">The height of the cylinder</param>
         /// <param name="Resolution">The amount of side</param>
         /// <returns>The mesh of the cylinder</returns>
-        public static Mesh CreateCylinder(double Radius, double Height, double Resolution)
+        public static Mesh CreateCylinder(double Radius, double Height, int Resolution)
         {
             return CreateCylinder(Radius, Radius, Height, Resolution);
         }
