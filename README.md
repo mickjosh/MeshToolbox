@@ -4,6 +4,7 @@
 - Mesh Fusion
 - Marching Cube
 - Primitive Mesh
+- Normals Generator
 
 ## Import Mesh
 This tool let you import OBJ, STL and Binary STL
@@ -46,4 +47,11 @@ This tool let you make primitive mesh (Cube, Cylinder, Cone , Sphere, Torus)
 
 ```csharp
   Mesh mesh = Primitive.CreateShape(ShapeParams);
+```
+
+## Normals Generator
+This tool let you generate normal for a mesh
+
+```csharp
+  mesh.GenerateNormals();
 ```
