@@ -141,12 +141,6 @@ namespace MeshToolbox.Tools
 
             if(System.Text.Encoding.UTF8.GetString(binaryFile).Contains("solid"))
             {
-                //Binary STL
-
-                return ImportSTLB(binaryFile, System.IO.Path.GetFileNameWithoutExtension(Path));
-            }
-            else
-            {
                 //ASCII STL
 
                 List<Vector3> vertex = new List<Vector3>();
@@ -154,6 +148,13 @@ namespace MeshToolbox.Tools
                 List<int> triangles = new List<int>();
 
                 return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray(), System.IO.Path.GetFileNameWithoutExtension(Path));
+
+            }
+            else
+            {
+                //Binary STL
+
+                return ImportSTLB(binaryFile, System.IO.Path.GetFileNameWithoutExtension(Path));
             }
         }
         /// <summary>

@@ -159,15 +159,6 @@ namespace MeshToolbox
         }
 
         /// <summary>
-        /// Generate smooth normal for the mesh
-        /// </summary>
-        /// <param name="angle">The angle threshold to smooth the normals</param>
-        public void GenerateNormal(double angle)
-        {
-
-        }
-
-        /// <summary>
         /// Remove unused vertex, normal and uv
         /// </summary>
         public void Clean()
