@@ -153,7 +153,7 @@ namespace MeshToolbox.Tools
                 List<Vector3> normals = new List<Vector3>();
                 List<int> triangles = new List<int>();
 
-                return new Mesh(vertex.ToArray(), normals.ToArray(), triangles.ToArray());
+                return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray());
             }
         }
         /// <summary>
@@ -205,9 +205,21 @@ namespace MeshToolbox.Tools
                 triangles.Add(2 + (i * 3));
             }
 
-            //Convert the mesh normal format (STL = triangleNormals, Internal = vertexNormals)
+            return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray());
+        }
 
-            return new Mesh(vertex.ToArray(), normals.ToArray(), triangles.ToArray());
+        /// <summary>
+        /// Convert the normal from a face format to a vertex format
+        /// </summary>
+        /// <param name="vertex">The vertex of the mesh</param>
+        /// <param name="normals">The normals in the face format of the mesh</param>
+        /// <param name="triangles">The triangles of the mesh</param>
+        /// <returns>The normals int the vertex format</returns>
+        private static Vector3[] ConvertNormalFormat(List<Vector3> vertex, List<Vector3> normals, List<int> triangles)
+        {
+            Vector3[] newNormals = new Vector3[vertex.Count];
+
+            return newNormals;
         }
     }
 }

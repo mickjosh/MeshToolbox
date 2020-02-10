@@ -190,6 +190,26 @@ namespace MeshToolbox
         #endregion
         #endregion
 
+        /// <summary>
+        /// Return a dot product of 2 vector
+        /// </summary>
+        /// <param name="v">The other vector to do the dot product</param>
+        /// <returns>The dot product</returns>
+        public double Dot(Vector2 v)
+        {
+            return (x * v.x) + (y * v.y);
+        }
+        /// <summary>
+        /// Return a dot product of 2 vector
+        /// </summary>
+        /// <param name="v1">The first vector to do the dot product</param>
+        /// <param name="v2">The second vector to do the dot product</param>
+        /// <returns>The dot product</returns>
+        public static double Dot(Vector2 v1, Vector2 v2)
+        {
+            return v1.Dot(v2);
+        }
+
         public override string ToString()
         {
             return $"({x.ToString(".0")}, {y.ToString(".0")})";
