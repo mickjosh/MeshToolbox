@@ -49,6 +49,7 @@
     <Compile Include="Tools\MeshExporter.cs" />
     <Compile Include="Tools\MeshFusion.cs" />
     <Compile Include="Tools\MeshImporter.cs" />
+    <Compile Include="Tools\NormalsGenerator.cs" />
     <Compile Include="Tools\Primitive.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

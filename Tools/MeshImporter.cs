@@ -219,6 +219,13 @@ namespace MeshToolbox.Tools
         {
             Vector3[] newNormals = new Vector3[vertex.Count];
 
+            for(int i = 0; i < triangles.Count / 3; i++)
+            {
+                newNormals[0 + (3 * i)] = normals[i];
+                newNormals[1 + (3 * i)] = normals[i];
+                newNormals[2 + (3 * i)] = normals[i];
+            }
+
             return newNormals;
         }
     }
