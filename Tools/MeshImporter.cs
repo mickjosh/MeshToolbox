@@ -143,7 +143,7 @@ namespace MeshToolbox.Tools
             {
                 //Binary STL
 
-                return ImportSTLB(binaryFile);
+                return ImportSTLB(binaryFile, System.IO.Path.GetFileNameWithoutExtension(Path));
             }
             else
             {
@@ -153,15 +153,16 @@ namespace MeshToolbox.Tools
                 List<Vector3> normals = new List<Vector3>();
                 List<int> triangles = new List<int>();
 
-                return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray());
+                return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray(), System.IO.Path.GetFileNameWithoutExtension(Path));
             }
         }
         /// <summary>
         /// Generate a mesh from a file of the binary stl format
         /// </summary>
         /// <param name="Path">The path of the stl</param>
+        /// <param name="MeshName">The name of the mesh</param>
         /// <returns>The mesh</returns>
-        private static Mesh ImportSTLB(byte[] binaryFile)
+        private static Mesh ImportSTLB(byte[] binaryFile, string MeshName)
         {
             /*
                 UINT8[80] – en-tête
@@ -205,7 +206,7 @@ namespace MeshToolbox.Tools
                 triangles.Add(2 + (i * 3));
             }
 
-            return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray());
+            return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray(), MeshName);
         }
 
         /// <summary>
