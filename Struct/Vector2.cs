@@ -17,7 +17,7 @@ namespace MeshToolbox
         public static Vector2 one = new Vector2(1, 1);
 
         public static Vector2 unitX = new Vector2(1, 0);
-        public static Vector2 unityY = new Vector2(0, 1);
+        public static Vector2 unitY = new Vector2(0, 1);
 
         public double x;
         public double y;

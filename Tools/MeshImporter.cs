@@ -142,12 +142,40 @@ namespace MeshToolbox.Tools
             {
                 //ASCII STL
 
+                string name;
                 List<Vector3> vertex = new List<Vector3>();
                 List<Vector3> normals = new List<Vector3>();
                 List<int> triangles = new List<int>();
 
-                return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray(), System.IO.Path.GetFileNameWithoutExtension(Path));
+                string[] lines = System.IO.File.ReadAllLines(Path);
+                name = lines[0].Split(' ').Length > 1 ? "mesh" : lines[0].Split(' ')[1];
 
+                int triangleCount = 0;
+                for (int i = 1; i < lines.Length; i += 7)
+                {
+                    string[] split = lines[0 + (i * 7)].Split(' ');
+
+                    double nX = double.Parse(split[2]);
+                    double nY = double.Parse(split[3]);
+                    double nZ = double.Parse(split[4]);
+                    normals.Add(new Vector3(nX, nY, nZ));
+
+                    for(int o = 0; o < 3; o++)
+                    {
+                        split = lines[1 + o + (i * 7)].Split(' ');
+
+                        double vX = double.Parse(split[1]);
+                        double vY = double.Parse(split[2]);
+                        double vZ = double.Parse(split[3]);
+                        vertex.Add(new Vector3(vX, vZ, vY));
+                    }
+
+                    triangles.Add(triangleCount++);
+                    triangles.Add(triangleCount++);
+                    triangles.Add(triangleCount++);
+                }
+
+                return new Mesh(vertex.ToArray(), ConvertNormalFormat(vertex, normals, triangles), triangles.ToArray(), name);
             }
             else
             {
